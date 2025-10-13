@@ -28,7 +28,6 @@
     }
 
     /* --- Animated Backgrounds (Wave-BG) --- */
-    /* This section remains for the subtle global dots, but can also be removed if needed. */
     .wave-bg {
       position: fixed;
       top: 0;
@@ -74,19 +73,15 @@
       padding: 0 20px;
       border-bottom: 1px solid #1a1a1a;
       
-      /* --- OPTIMIZATION FIX: Replaced laggy animated background with static gradient --- */
+      /* Static gradient for optimization */
       background: linear-gradient(135deg, #181818, #0a0a0a); 
     }
-
-    /* REMOVED: header::before and all its animations (oceanFade, softSway) */
-    /* REMOVED: header::after (vignette) to keep the background simple */
 
     header h1 {
       font-size: 5rem;
       font-weight: 700;
       letter-spacing: -2px;
       text-transform: uppercase;
-      /* Keeping a subtle text-shadow for depth without heavy rendering cost */
       text-shadow: 0 0 10px rgba(0, 255, 255, 0.05), 0 0 5px rgba(0, 0, 0, 0.5); 
       margin-bottom: 30px;
     }
@@ -98,7 +93,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin: 15px; 
+      margin: 15px 0; 
       padding: 12px 40px;
       background: linear-gradient(145deg, #1c1c1c, #333333);
       border: 1px solid #444; 
@@ -113,6 +108,7 @@
                   inset 0 1px 0 rgba(255,255,255,0.05),
                   0 4px 10px -5px rgba(0, 119, 255, 0.5); 
       position: relative;
+      min-width: 250px; 
     }
 
     .button:hover {
@@ -124,12 +120,11 @@
       transform: translatey(-1px);
     }
     
-    .button-icon {
+    /* NEW: Style for the emoji span */
+    .button-emoji {
         margin-right: 10px;
-        height: 20px;
-        width: 20px;
-        object-fit: contain;
-        filter: brightness(0) invert(1);
+        font-size: 1.5em; /* Make emoji a bit larger */
+        line-height: 1; /* Ensure consistent vertical alignment */
     }
 
     /* -------------------------------------- */
@@ -151,6 +146,11 @@
       border-radius: 8px;
       border: 1px solid #222;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      
+      display: flex;
+      flex-direction: column; 
+      gap: 10px; 
+      align-items: center; 
     }
     
     /* -------------------------------------- */
@@ -197,8 +197,18 @@
       <a href="#top" class="button">BACK</a>
       
       <a href="https://www.windows93.net/" class="button" target="_self">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Windows93_Logo.png" alt="Windows93 Icon" class="button-icon">
+        <span class="button-emoji">💻</span>
         SECTION 1
+      </a>
+
+      <a href="https://theuselessweb.com/" class="button" target="_self">
+        <span class="button-emoji">🌐</span>
+        SECTION 2
+      </a>
+      
+      <a href="https://emupedia.net/beta/emuos/" class="button" target="_self">
+        <span class="button-emoji">🎮</span>
+        SECTION 3
       </a>
     </div>
   </section>
