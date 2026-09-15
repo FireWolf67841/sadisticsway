@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Professional Landing Page</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     /* -------------------------------------- */
     /* 1. GLOBAL & BASE STYLES                */
@@ -27,7 +28,10 @@
       padding: 0 40px;
     }
 
-    /* --- GIF Background --- */
+    /* -------------------------------------- */
+    /* 2. BACKGROUND STACK                    */
+    /* -------------------------------------- */
+    
     .video-container {
       position: fixed;
       top: 0;
@@ -35,15 +39,16 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      z-index: -5;
+      z-index: -10;
       pointer-events: none;
       background-color: #0d0d0d;
     }
 
     .video-container img {
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       object-fit: cover;
+      display: block;
       pointer-events: none;
     }
 
@@ -51,22 +56,21 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(13, 13, 13, 0.75); 
-      z-index: -4;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(13, 13, 13, 0.45); 
+      z-index: -9;
       pointer-events: none;
     }
 
-    /* --- Animated Backgrounds (Wave-BG) --- */
     .wave-bg {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       overflow: hidden;
-      z-index: -3;
+      z-index: -8;
       pointer-events: none;
     }
 
@@ -89,19 +93,38 @@
       100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
-    /* --- Mysterious Canvas Animation --- */
+    #ascii-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -7;
+      pointer-events: none;
+    }
+
+    #galaxy-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -6;
+      pointer-events: none;
+    }
+
     #mysterious-canvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
+      width: 100vw;
+      height: 100vh;
+      z-index: -5;
       pointer-events: none;
     }
 
     /* -------------------------------------- */
-    /* 2. MAIN HEADER (Screen 1)              */
+    /* 3. MAIN HEADER                         */
     /* -------------------------------------- */
     header {
       text-align: center;
@@ -114,8 +137,7 @@
       align-items: center;
       padding: 0 20px;
       border-bottom: 1px solid rgba(26, 26, 26, 0.5);
-      
-      background: linear-gradient(135deg, rgba(24, 24, 24, 0.6), rgba(10, 10, 10, 0.8)); 
+      background: linear-gradient(135deg, rgba(18, 15, 23, 0.25), rgba(10, 8, 13, 0.45)); 
     }
 
     header h1 {
@@ -123,12 +145,12 @@
       font-weight: 700;
       letter-spacing: -2px;
       text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(0, 255, 255, 0.05), 0 0 5px rgba(0, 0, 0, 0.5); 
+      text-shadow: 0 0 15px rgba(168, 85, 247, 0.3), 0 0 5px rgba(0, 0, 0, 0.8); 
       margin-bottom: 30px;
     }
 
     /* -------------------------------------- */
-    /* 3. BUTTONS                             */
+    /* 4. BUTTONS                             */
     /* -------------------------------------- */
     .button {
       display: inline-flex;
@@ -136,8 +158,8 @@
       justify-content: center;
       margin: 15px 0; 
       padding: 12px 40px;
-      background: linear-gradient(145deg, #1c1c1c, #333333);
-      border: 1px solid #444; 
+      background: linear-gradient(145deg, rgba(28, 24, 35, 0.85), rgba(51, 43, 64, 0.85));
+      border: 1px solid #4a3b63; 
       border-radius: 4px;
       color: #f0f0f0;
       text-decoration: none;
@@ -145,30 +167,31 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3), 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4), 
                   inset 0 1px 0 rgba(255,255,255,0.05),
-                  0 4px 10px -5px rgba(0, 119, 255, 0.5); 
+                  0 4px 10px -5px rgba(168, 85, 247, 0.5); 
       position: relative;
       min-width: 250px; 
+      backdrop-filter: blur(4px);
     }
 
     .button:hover {
-      background: linear-gradient(145deg, #0077ff, #0099ff);
+      background: linear-gradient(145deg, #896ABD, #A855F7);
       color: #ffffff;
-      border-color: #0077ff;
-      box-shadow: 0 6px 15px rgba(0, 119, 255, 0.4), 
-                  0 0 20px rgba(0, 119, 255, 0.7);
-      transform: translatey(-1px);
+      border-color: #A855F7;
+      box-shadow: 0 6px 15px rgba(168, 85, 247, 0.4), 
+                  0 0 20px rgba(168, 85, 247, 0.7);
+      transform: translateY(-1px);
     }
     
     .button-emoji {
-        margin-right: 10px;
-        font-size: 1.5em; 
-        line-height: 1; 
+      margin-right: 10px;
+      font-size: 1.5em; 
+      line-height: 1; 
     }
 
     /* -------------------------------------- */
-    /* 4. NAVIGATION SECTION (Screen 2)       */
+    /* 5. NAVIGATION SECTION                  */
     /* -------------------------------------- */
     #nav-section {
       height: 100vh; 
@@ -182,12 +205,11 @@
     
     .button-container {
       padding: 40px;
-      background: rgba(18, 18, 18, 0.8);
+      background: rgba(18, 15, 23, 0.75);
       border-radius: 8px;
-      border: 1px solid #222;
+      border: 1px solid #322842;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      backdrop-filter: blur(4px); 
-      
+      backdrop-filter: blur(6px); 
       display: flex;
       flex-direction: column; 
       gap: 10px; 
@@ -195,9 +217,9 @@
     }
     
     /* -------------------------------------- */
-    /* 5. CUSTOM CURSOR STYLES                */
+    /* 6. CURSORS                             */
     /* -------------------------------------- */
-    .shark-cursor, .click-pointer {
+    .shark-cursor, .center-cursor-wrapper {
       position: fixed;
       pointer-events: none;
       z-index: 9999;
@@ -209,21 +231,112 @@
       height: 40px;
     }
 
-    .click-pointer {
-      width: 8px;
-      height: 8px;
-      background-color: #ffffff;
+    /* --- CSS Hyper-Realistic Black Hole Cursor --- */
+    /* By building this with CSS, it is mathematically perfect, infinite resolution, 
+       100% transparent background, and loops flawlessly without external image loading issues. */
+    .center-cursor-wrapper {
+      width: 48px; 
+      height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bh-event-horizon {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: #000000;
       border-radius: 50%;
+      /* Creates the sharp inner darkness and the stark contrast rim */
+      box-shadow: inset 0 0 2px #000, 0 0 4px rgba(0,0,0,0.9);
+      z-index: 4;
+    }
+
+    .bh-disk-inner {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      /* High energy inner accretion disk */
+      background: conic-gradient(
+        from 0deg,
+        #000000 0%,
+        #A855F7 20%,
+        #ffffff 40%,
+        #896ABD 60%,
+        #000000 80%,
+        #A855F7 100%
+      );
+      filter: blur(1.5px);
+      z-index: 3;
+      animation: bh-spin-fast 0.6s linear infinite;
+    }
+
+    .bh-disk-outer {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      /* Diffuse outer swirling matter */
+      background: conic-gradient(
+        from 180deg,
+        rgba(168, 85, 247, 0) 0%,
+        rgba(137, 106, 189, 0.7) 30%,
+        rgba(255, 255, 255, 0.9) 50%,
+        rgba(137, 106, 189, 0.7) 70%,
+        rgba(168, 85, 247, 0) 100%
+      );
+      filter: blur(3px);
+      z-index: 2;
+      animation: bh-spin-slow 1.2s linear infinite reverse;
+    }
+
+    .bh-halo {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      /* Gravitational lensing / photon ring glow */
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.6) 15%, rgba(0,0,0,0) 65%);
+      z-index: 1;
+      animation: bh-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes bh-spin-fast {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.05); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    @keyframes bh-spin-slow {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.02); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    @keyframes bh-pulse {
+      0%, 100% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <div class="click-pointer"></div>
+  
   <img class="shark-cursor" src="https://media.tenor.com/5zUUL3Osw2AAAAAi/shark-blahaj.gif" alt="shark cursor" />
+  
+  <!-- The flawlessly animated CSS Black Hole Cursor -->
+  <div class="center-cursor-wrapper">
+    <div class="bh-halo"></div>
+    <div class="bh-disk-outer"></div>
+    <div class="bh-disk-inner"></div>
+    <div class="bh-event-horizon"></div>
+  </div>
   
   <div class="video-container">
     <img src="https://i.postimg.cc/65c5W4vt/YTDown-You-Tube-Vision-serpent-Ayahuasca-DMT-Media-Mt2OKAn-Qz5w-001-720p.gif" alt="background gif" />
   </div>
+
   <div class="video-overlay"></div>
 
   <div class="wave-bg">
@@ -231,6 +344,8 @@
     <div class="wave"></div>
   </div>
 
+  <canvas id="ascii-canvas"></canvas>
+  <canvas id="galaxy-canvas"></canvas>
   <canvas id="mysterious-canvas"></canvas>
 
   <header id="top">
@@ -262,53 +377,214 @@
   </section>
 
 <script>
-    // -------------------------
-    // 1. Cursor Behavior
-    // -------------------------
-    const shark = document.querySelector('.shark-cursor');
-    const dot = document.querySelector('.click-pointer');
-
     let pointerX = window.innerWidth / 2;
     let pointerY = window.innerHeight / 2;
-    let sharkX = pointerX, sharkY = pointerY;
 
-    // The dot instantly follows the cursor position with 0 delay.
     document.addEventListener('mousemove', e => {
       pointerX = e.clientX;
       pointerY = e.clientY;
-      dot.style.left = `${pointerX}px`;
-      dot.style.top = `${pointerY}px`;
     });
 
-    function followShark() {
-      sharkX += (pointerX - sharkX) * 0.1;
-      sharkY += (pointerY - sharkY) * 0.1;
+    const shark = document.querySelector('.shark-cursor');
+    const centerCursor = document.querySelector('.center-cursor-wrapper');
+    let sharkX = pointerX, sharkY = pointerY;
+
+    function renderCursors() {
+      // The black hole cursor sits perfectly on the mouse with zero delay
+      centerCursor.style.left = `${pointerX}px`;
+      centerCursor.style.top = `${pointerY}px`;
+
+      sharkX += (pointerX - sharkX) * 0.12;
+      sharkY += (pointerY - sharkY) * 0.12;
       shark.style.left = `${sharkX}px`;
       shark.style.top = `${sharkY}px`;
-      requestAnimationFrame(followShark);
+      
+      requestAnimationFrame(renderCursors);
     }
-    followShark();
+    renderCursors();
 
-    // -------------------------
-    // 2. Mysterious Canvas Animation (Constellation Web)
-    // -------------------------
-    const canvas = document.getElementById('mysterious-canvas');
-    const ctx = canvas.getContext('2d');
-    
+    const asciiCanvas = document.getElementById('ascii-canvas');
+    const asciiCtx = asciiCanvas.getContext('2d');
+    const fontSize = 15;
+    let asciiCols, asciiRows;
+    const glyphs = ['.', ',', '-', '~', ':', ';', '=', '+', '*', '#', '$', '@'];
+
+    function resizeAscii() {
+      asciiCanvas.width = window.innerWidth;
+      asciiCanvas.height = window.innerHeight;
+      asciiCols = Math.floor(asciiCanvas.width / fontSize) + 1;
+      asciiRows = Math.floor(asciiCanvas.height / fontSize) + 1;
+    }
+    window.addEventListener('resize', resizeAscii);
+    resizeAscii();
+
+    let asciiTime = 0;
+    function renderAscii() {
+      asciiTime += 0.04;
+      asciiCtx.clearRect(0, 0, asciiCanvas.width, asciiCanvas.height);
+      asciiCtx.font = `${fontSize}px monospace`;
+      asciiCtx.fillStyle = 'rgba(245, 245, 244, 0.14)';
+
+      const mCol = pointerX / fontSize;
+      const mRow = pointerY / fontSize;
+
+      for (let y = 0; y < asciiRows; y++) {
+        for (let x = 0; x < asciiCols; x++) {
+          const dx = x - mCol;
+          const dy = y - mRow;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const ripple = Math.sin(dist * 0.25 - asciiTime) * 3;
+          
+          let idx = Math.floor(Math.abs((x + y + ripple) % glyphs.length));
+          asciiCtx.fillText(glyphs[idx], x * fontSize, y * fontSize + fontSize);
+        }
+      }
+      requestAnimationFrame(renderAscii);
+    }
+    renderAscii();
+
+    const galaxyCanvas = document.getElementById('galaxy-canvas');
+    const galRenderer = new THREE.WebGLRenderer({ canvas: galaxyCanvas, antialias: false, alpha: true });
+    galRenderer.setSize(window.innerWidth, window.innerHeight);
+    galRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    galRenderer.setClearColor(0x000000, 0);
+
+    const galScene = new THREE.Scene();
+    const galCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    galCamera.position.z = 30;
+
+    function createProceduralGalaxyTexture() {
+        const c = document.createElement('canvas');
+        c.width = 256; c.height = 256;
+        const ctx = c.getContext('2d');
+        const cx = 128, cy = 128;
+        
+        for(let i=0; i < 400; i++) {
+            const angle = i * 0.1;
+            const radius = i * 0.3;
+            ctx.fillStyle = `rgba(255, 255, 255, ${1 - i/400})`;
+            
+            ctx.beginPath();
+            ctx.arc(cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), Math.random() * 2.5 + 0.5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(cx + radius * Math.cos(angle + Math.PI), cy + radius * Math.sin(angle + Math.PI), Math.random() * 2.5 + 0.5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        return new THREE.CanvasTexture(c);
+    }
+
+    const finalGalaxyTexture = createProceduralGalaxyTexture();
+
+    const galaxyCount = 120;
+    const galaxyGeo = new THREE.PlaneGeometry(3.5, 3.5); 
+    const galaxyMat = new THREE.MeshBasicMaterial({
+      map: finalGalaxyTexture,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending, 
+      color: 0xA855F7,
+      side: THREE.DoubleSide
+    });
+
+    const galaxyInstanced = new THREE.InstancedMesh(galaxyGeo, galaxyMat, galaxyCount);
+    galScene.add(galaxyInstanced);
+
+    const dummy = new THREE.Object3D();
+    const galaxyData = [];
+
+    for (let i = 0; i < galaxyCount; i++) {
+      const scale = Math.random() * 0.5 + 0.5;
+      galaxyData.push({
+        x: (Math.random() - 0.5) * 70,
+        y: (Math.random() - 0.5) * 70,
+        z: (Math.random() - 0.5) * 20,
+        rx: (Math.random() - 0.5) * Math.PI, 
+        ry: (Math.random() - 0.5) * Math.PI,
+        rz: Math.random() * Math.PI * 2, 
+        vx: (Math.random() - 0.5) * 0.03,
+        vy: (Math.random() - 0.5) * 0.03 + 0.015,
+        rotX: (Math.random() - 0.5) * 0.005,
+        rotY: (Math.random() - 0.5) * 0.005,
+        rotZ: (Math.random() - 0.5) * 0.02 + 0.01, 
+        baseScale: scale,
+        currentScale: scale
+      });
+    }
+
+    function renderGalaxies() {
+      const mouseNormX = (pointerX / window.innerWidth) * 2 - 1;
+      const mouseNormY = -(pointerY / window.innerHeight) * 2 + 1;
+      
+      const vFov = 60 * Math.PI / 180;
+      const visibleHeight = 2 * Math.tan(vFov / 2) * 30;
+      const visibleWidth = visibleHeight * (window.innerWidth / window.innerHeight);
+      
+      const targetX = mouseNormX * (visibleWidth / 2);
+      const targetY = mouseNormY * (visibleHeight / 2);
+
+      for (let i = 0; i < galaxyCount; i++) {
+        let data = galaxyData[i];
+        
+        data.rx += data.rotX;
+        data.ry += data.rotY;
+        data.rz += data.rotZ;
+        data.y += data.vy;
+        
+        if (data.y > 35) data.y = -35;
+
+        let dx = data.x - targetX;
+        let dy = data.y - targetY;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 10) {
+          const force = (10 - dist) / 10;
+          data.x += (dx / dist) * force * 0.7;
+          data.y += (dy / dist) * force * 0.7;
+          
+          data.currentScale = data.baseScale * (1 + force * 1.5);
+          data.rz += data.rotZ * 3; 
+        } else {
+          data.currentScale += (data.baseScale - data.currentScale) * 0.1;
+        }
+
+        dummy.position.set(data.x, data.y, data.z);
+        dummy.rotation.set(data.rx, data.ry, data.rz);
+        dummy.scale.setScalar(data.currentScale);
+        dummy.updateMatrix();
+
+        galaxyInstanced.setMatrixAt(i, dummy.matrix);
+      }
+      
+      galaxyInstanced.instanceMatrix.needsUpdate = true;
+      galRenderer.render(galScene, galCamera);
+      requestAnimationFrame(renderGalaxies);
+    }
+    renderGalaxies();
+
+    window.addEventListener('resize', () => {
+      galCamera.aspect = window.innerWidth / window.innerHeight;
+      galCamera.updateProjectionMatrix();
+      galRenderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    const mystCanvas = document.getElementById('mysterious-canvas');
+    const mystCtx = mystCanvas.getContext('2d');
     let particles = [];
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      init();
+    function resizeMyst() {
+      mystCanvas.width = window.innerWidth;
+      mystCanvas.height = window.innerHeight;
+      initParticles();
     }
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', resizeMyst);
 
     class Particle {
       constructor() {
         this.radius = Math.random() * 1.5 + 0.5;
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * mystCanvas.width;
+        this.y = Math.random() * mystCanvas.height;
         this.vx = (Math.random() - 0.5) * 1;
         this.vy = (Math.random() - 0.5) * 1;
       }
@@ -316,29 +592,28 @@
       update() {
         this.x += this.vx;
         this.y += this.vy;
-        
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        if (this.x < 0 || this.x > mystCanvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > mystCanvas.height) this.vy *= -1;
       }
       
       draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
-        ctx.fill();
+        mystCtx.beginPath();
+        mystCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        mystCtx.fillStyle = '#ffffff';
+        mystCtx.fill();
       }
     }
 
-    function init() {
+    function initParticles() {
       particles = [];
-      let particleCount = (canvas.height * canvas.width) / 6000;
+      let particleCount = (mystCanvas.height * mystCanvas.width) / 6000;
       for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle());
       }
     }
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function renderParticles() {
+      mystCtx.clearRect(0, 0, mystCanvas.width, mystCanvas.height);
       
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
@@ -349,12 +624,12 @@
         let distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
         
         if (distMouse < 180) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(pointerX, pointerY);
-          ctx.strokeStyle = `rgba(255, 255, 255, ${0.8 * (1 - distMouse/180)})`; 
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
+          mystCtx.beginPath();
+          mystCtx.moveTo(particles[i].x, particles[i].y);
+          mystCtx.lineTo(pointerX, pointerY);
+          mystCtx.strokeStyle = `rgba(255, 255, 255, ${0.8 * (1 - distMouse/180)})`; 
+          mystCtx.lineWidth = 1.5;
+          mystCtx.stroke();
         }
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -363,20 +638,22 @@
           let dist = Math.sqrt(dx * dx + dy * dy);
           
           if (dist < 150) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(255, 255, 255, ${0.3 * (1 - dist/150)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
+            mystCtx.beginPath();
+            mystCtx.moveTo(particles[i].x, particles[i].y);
+            mystCtx.lineTo(particles[j].x, particles[j].y);
+            mystCtx.strokeStyle = `rgba(255, 255, 255, ${0.3 * (1 - dist/150)})`;
+            mystCtx.lineWidth = 0.5;
+            mystCtx.stroke();
           }
         }
       }
-      requestAnimationFrame(animateParticles);
+      requestAnimationFrame(renderParticles);
     }
     
-    resizeCanvas();
-    animateParticles();
+    resizeMyst();
+    renderParticles();
 </script>
 </body>
 </html>
+
+```
